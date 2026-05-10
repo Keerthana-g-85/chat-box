@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import MessageBubble from '../components/MessageBubble'
 import MessageInput from '../components/MessageInput'
+import JoinSection from '../components/JoinSection'
 import io from 'socket.io-client'
 import '../styles/ChatPage.css'
 
@@ -51,15 +52,14 @@ export default function ChatPage() {
 
     <div className="chat-container">
 
-      <div className="join-section">
-        <input type="text" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)} className="username-input" />
-        <button onClick={() => setJoined(true)} disabled={joined} className="join-button">Join</button>
-      </div>
+      <JoinSection username={username} setUsername={setUsername} joined={joined} setJoined={setJoined} />
 
       <div className="messages-container">
         {messages.map((msg, index) => (<MessageBubble msg={msg} key={index} username={username} />))}
       </div>
+
       <MessageInput message={message} setMessage={setMessage} sendMessage={sendMessage}/>
+
     </div>
   </div>
   )
