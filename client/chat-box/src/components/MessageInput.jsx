@@ -8,6 +8,11 @@ export default function MessageInput({ message, setMessage, sendMessage }) {
         placeholder="Type message..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+                sendMessage()
+                }
+            }}
         className="message-input"
       />
 
