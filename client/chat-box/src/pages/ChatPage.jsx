@@ -24,7 +24,7 @@ export default function ChatPage() {
 
   return (
     <div>
-      Chat Page
-    </div>
+      <input type="text" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+      <button onClick={() => setJoined(true)}>Join</button></div>
   )
 }
