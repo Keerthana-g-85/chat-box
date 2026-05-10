@@ -22,9 +22,17 @@ export default function ChatPage() {
 
 }, [])
 
+  function sendMessage(){
+    
+  }
+
   return (
     <div>
       <input type="text" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-      <button onClick={() => setJoined(true)}>Join</button></div>
+      <button onClick={() => setJoined(true)}>Join</button>
+
+      <input type="text" placeholder="Type message..."value={message} onChange={(e) => setMessage(e.target.value)}/>
+      <button onClick={sendMessage}>Send</button>
+    </div>
   )
 }
