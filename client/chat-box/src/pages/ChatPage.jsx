@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import io from 'socket.io-client'
+import '../styles/ChatPage.css'
 
 const socket = io('http://localhost:3001')
 
@@ -44,21 +45,32 @@ export default function ChatPage() {
   }
 
   return (
-    <div>
-      <input type="text" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-      <button onClick={() => setJoined(true)}>Join</button>
+  <div className="chat-page">
 
-      <div style={{ border:'1px solid black', height:'300px', overflowY:'scroll', padding:'10px', marginTop:'20px' }}>
-      {messages.map((msg, index) => (
-        <div key={index} style={{ marginBottom:'10px' }}>
-        <p>{msg.user}: {msg.text}</p>
-        <small>{msg.time}</small>
-        </div>
-          ))}
+    <div className="chat-container">
+
+      <div className="join-section">
+        <input type="text" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)} className="username-input" />
+        <button onClick={() => setJoined(true)} disabled={joined} className="join-button">Join</button>
       </div>
 
-      <input type="text" placeholder="Type message..."value={message} onChange={(e) => setMessage(e.target.value)}/>
-      <button onClick={sendMessage}>Send</button>
+      <div className="messages-container">
+        {messages.map((msg, index) => (
+          <div key={index} className={msg.user === username ? 'message-row my-row' : 'message-row other-row'}>
+            <div className={msg.user === username ? 'message-bubble my-message' : 'message-bubble other-message'}>
+              <p className="message-user">{msg.user}</p>
+              <i className="message-text">{msg.text}</i>
+              <small className="message-time">{msg.time}</small>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="input-section">
+        <input type="text" placeholder="Type message..." value={message} onChange={(e) => setMessage(e.target.value)} className="message-input" />
+        <button onClick={sendMessage} className="send-button">Send</button>
+      </div>
     </div>
+  </div>
   )
 }
