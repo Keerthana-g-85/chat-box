@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import MessageBubble from '../components/MessageBubble'
+import MessageInput from '../components/MessageInput'
 import io from 'socket.io-client'
 import '../styles/ChatPage.css'
 
@@ -56,14 +57,9 @@ export default function ChatPage() {
       </div>
 
       <div className="messages-container">
-
-  {messages.map((msg, index) => (<MessageBubble msg={msg} key={index} username={username} />))}</div>
-      
-
-      <div className="input-section">
-        <input type="text" placeholder="Type message..." value={message} onChange={(e) => setMessage(e.target.value)} className="message-input" />
-        <button onClick={sendMessage} className="send-button">Send</button>
+        {messages.map((msg, index) => (<MessageBubble msg={msg} key={index} username={username} />))}
       </div>
+      <MessageInput message={message} setMessage={setMessage} sendMessage={sendMessage}/>
     </div>
   </div>
   )
