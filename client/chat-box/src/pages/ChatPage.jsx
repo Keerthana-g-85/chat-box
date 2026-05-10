@@ -10,6 +10,18 @@ export default function ChatPage() {
   const [username, setUsername] = useState('')
   const [joined, setJoined] = useState(false)
 
+  useEffect(() => {
+
+  socket.on('receive_message', (data) => {
+    setMessages((prev) => [...prev, data])
+  })
+
+  return () => {
+    socket.off('receive_message')
+  }
+
+}, [])
+
   return (
     <div>
       Chat Page
