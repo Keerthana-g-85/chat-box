@@ -1,4 +1,7 @@
+import { useRef } from 'react'
+
 export default function MessageInput({ message, setMessage, sendMessage }) {
+    const inputRef = useRef(null)
   return (
 
     <div className="input-section">
@@ -13,11 +16,14 @@ export default function MessageInput({ message, setMessage, sendMessage }) {
                 sendMessage()
                 }
             }}
+        ref={inputRef}
         className="message-input"
       />
 
       <button
-        onClick={sendMessage}
+        onClick={()=>{ sendMessage()
+        inputRef.current.focus()
+        }}
         className="send-button">Send
       </button>
 
