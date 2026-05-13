@@ -13,6 +13,7 @@ export default function ChatPage() {
   const [messages, setMessages] = useState([])
   const [username, setUsername] = useState('')
   const [joined, setJoined] = useState(false)
+  const [room, setRoom] = useState('')
   const messagesEndRef = useRef(null)
 
   useEffect(() => {
@@ -32,6 +33,12 @@ export default function ChatPage() {
   })
   }, [messages])
 
+  function joinRoom() {
+  if (username.trim() === '' || room.trim() === '') return
+  socket.emit('join_room', room)
+  setJoined(true)
+}
+
   function sendMessage(){
     if (!joined) return
     if (message.trim() === '') return
@@ -45,7 +52,8 @@ export default function ChatPage() {
     const messageData = {
     user: username,
     text: message,
-    time: currentTime
+    time: currentTime,
+    room:room
     }
 
   socket.emit('send_message', messageData)
@@ -58,7 +66,7 @@ export default function ChatPage() {
 
     <div className="chat-container">
 
-      <JoinSection username={username} setUsername={setUsername} joined={joined} setJoined={setJoined} />
+      <JoinSection username={username} setUsername={setUsername} joined={joined} joinRoom={joinRoom} room={room} setRoom={setRoom}/>
 
       <div className="messages-container">
         {messages.map((msg, index) => (<MessageBubble msg={msg} key={index} username={username} />))}
