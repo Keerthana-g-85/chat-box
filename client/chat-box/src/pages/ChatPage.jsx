@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState , useRef } from 'react'
 import MessageBubble from '../components/MessageBubble'
 import MessageInput from '../components/MessageInput'
 import JoinSection from '../components/JoinSection'
@@ -13,6 +13,7 @@ export default function ChatPage() {
   const [messages, setMessages] = useState([])
   const [username, setUsername] = useState('')
   const [joined, setJoined] = useState(false)
+  const messagesEndRef = useRef(null)
 
   useEffect(() => {
 
@@ -23,8 +24,13 @@ export default function ChatPage() {
   return () => {
     socket.off('receive_message')
   }
-
 }, [])
+
+  useEffect(() => {
+  messagesEndRef.current?.scrollIntoView({
+    behavior:'smooth'
+  })
+  }, [messages])
 
   function sendMessage(){
     if (!joined) return
@@ -56,6 +62,7 @@ export default function ChatPage() {
 
       <div className="messages-container">
         {messages.map((msg, index) => (<MessageBubble msg={msg} key={index} username={username} />))}
+        <div ref={messagesEndRef}></div>
       </div>
 
       <MessageInput message={message} setMessage={setMessage} sendMessage={sendMessage}/>
