@@ -22,6 +22,14 @@ io.on('connection', (socket) => {
   console.log('User connected')
   console.log(socket.id)
 
+  socket.on('typing', (room, username) => {
+  socket.to(room).emit('show_typing', username)
+  })
+
+  socket.on('stop_typing', (room) => {
+  socket.to(room).emit('hide_typing')
+  })
+
   socket.on('join_room', (room) => {
 
   if (!roomUsers[room]) {

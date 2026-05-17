@@ -14,6 +14,7 @@ export default function ChatPage() {
   const [username, setUsername] = useState('')
   const [joined, setJoined] = useState(false)
   const [room, setRoom] = useState('')
+  const [typingUser, setTypingUser] = useState('')
   const messagesEndRef = useRef(null)
 
   useEffect(() => {
@@ -29,10 +30,22 @@ export default function ChatPage() {
   socket.on('room_full', () => {
   alert('Room is full')
   })
+  socket.on('show_typing', (typingUsername) => {
+  if (typingUsername !== username) {
+    setTypingUser(`${typingUsername} is typing...`)
+  }
+  })
+
+  socket.on('hide_typing', () => {
+  setTypingUser('')
+  })
 
   return () => {
     socket.off('receive_message')
     socket.off('chat_history')
+    socket.off('room_full')
+    socket.off('show_typing')
+    socket.off('hide_typing')
   }
 
 }, [])
@@ -76,16 +89,33 @@ export default function ChatPage() {
 
     <div className="chat-container">
 
-      <JoinSection username={username} setUsername={setUsername} joined={joined} joinRoom={joinRoom} room={room} setRoom={setRoom}/>
+      <JoinSection
+        username={username}
+        setUsername={setUsername}
+        joined={joined}
+        joinRoom={joinRoom}
+        room={room}
+        setRoom={setRoom}
+      />
 
       <div className="messages-container">
-        {messages.map((msg, index) => (<MessageBubble msg={msg} key={index} username={username} />))}
+        {messages.map((msg, index) => (
+          <MessageBubble msg={msg} key={index} username={username} />
+        ))}
         <div ref={messagesEndRef}></div>
       </div>
 
-      <MessageInput message={message} setMessage={setMessage} sendMessage={sendMessage}/>
+      {typingUser && <p className="typing-text">{typingUser}</p>}
 
+      <MessageInput
+        message={message}
+        setMessage={setMessage}
+        sendMessage={sendMessage}
+        socket={socket}
+        room={room}
+        username={username}
+      />
     </div>
   </div>
-  )
+)
 }
