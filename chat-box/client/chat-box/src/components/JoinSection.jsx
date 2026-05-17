@@ -1,8 +1,8 @@
-export default function JoinSection({username,setUsername,joined,joinRoom,room,setRoom}) {
+export default function JoinSection({ username, setUsername, joined, joinRoom, room, setRoom }) {
   return (
-
     <div className="join-section">
 
+      {/* Input for username */}
       <input
         type="text"
         placeholder="Enter username"
@@ -11,16 +11,24 @@ export default function JoinSection({username,setUsername,joined,joinRoom,room,s
         className="username-input"
       />
 
-      <input 
-      type="text" 
-      placeholder="Enter room name" 
-      value={room} 
-      onChange={(e) => setRoom(e.target.value)} 
-      className="username-input" />
+      {/* Input for room name */}
+      <input
+        type="text"
+        placeholder="Enter room name"
+        value={room}
+        onChange={(e) => setRoom(e.target.value)}
+        className="username-input"
+      />
 
-      <button onClick={joinRoom} disabled={joined} className="join-button">Join</button>
+      {/* Join button gets disabled after joining */}
+      <button
+        onClick={joinRoom}
+        disabled={joined}
+        className="join-button"
+      >
+        Join
+      </button>
 
     </div>
-
   )
 }
