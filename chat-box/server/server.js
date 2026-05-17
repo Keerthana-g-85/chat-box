@@ -16,12 +16,27 @@ const io = new Server(server, {
 })
 
 const chatHistory = {}
+const roomUsers = {}
 
 io.on('connection', (socket) => {
   console.log('User connected')
   console.log(socket.id)
 
   socket.on('join_room', (room) => {
+
+  if (!roomUsers[room]) {
+    roomUsers[room] = []
+  }
+
+  if (roomUsers[room].includes(socket.id)) return
+
+  if (roomUsers[room].length >= 2) {
+    socket.emit('room_full')
+    return
+  }
+
+  roomUsers[room].push(socket.id)
+
   socket.join(room)
 
   if (chatHistory[room]) {
@@ -31,7 +46,7 @@ io.on('connection', (socket) => {
   }
 
   console.log(`Joined room: ${room}`)
-})
+  })
 
   socket.on('send_message', (data) => {
   chatHistory[data.room].push(data)
@@ -39,6 +54,14 @@ io.on('connection', (socket) => {
 })
 
   socket.on('disconnect', () => {
+    for (const room in roomUsers) {
+    roomUsers[room] = roomUsers[room].filter(id => id !== socket.id)
+
+    if (roomUsers[room].length === 0) {
+      delete roomUsers[room]
+      delete chatHistory[room]
+    }
+  }
     console.log('User disconnected')
   })
 })

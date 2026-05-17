@@ -26,6 +26,10 @@ export default function ChatPage() {
     setMessages(history)
   })
 
+  socket.on('room_full', () => {
+  alert('Room is full')
+  })
+
   return () => {
     socket.off('receive_message')
     socket.off('chat_history')
