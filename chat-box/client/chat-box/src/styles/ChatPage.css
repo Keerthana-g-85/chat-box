@@ -1,0 +1,142 @@
+.chat-page{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-color:#313338;
+}
+
+.chat-container{
+  width:450px;
+  background-color:#2b2d31;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+.join-section{
+  display:flex;
+  gap:10px;
+}
+
+.username-input{
+  flex:1;
+  padding:10px;
+  border:none;
+  outline:none;
+  border-radius:8px;
+  font-size:14px;
+}
+
+.join-button{
+  padding:10px 15px;
+  background:#5865F2;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.join-button:disabled{
+  background:gray;
+  cursor:not-allowed;
+}
+
+.messages-container{
+  height:300px;
+  overflow-y:scroll;
+  padding:10px;
+  margin-top:20px;
+  background:#1e1f22;
+  border-radius:10px;
+}
+
+.message-row{
+  display:flex;
+  align-items:flex-end;
+  margin-bottom:8px;
+  gap:8px;
+}
+
+.my-row{
+  justify-content:flex-end;
+}
+
+.other-row{
+  justify-content:flex-start;
+}
+
+.message-bubble{
+  max-width:65%;
+  padding:8px 10px;
+  border-radius:12px;
+}
+
+.my-message{
+  background:#005c4b;
+  color:white;
+  border-bottom-right-radius:3px;
+}
+
+.other-message{
+  background:#202c33;
+  color:white;
+  border-bottom-left-radius:3px;
+}
+
+.message-content{
+  display:inline;
+}
+
+.message-text{
+  font-size:14px;
+  line-height:1.4;
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+
+.message-time{
+  font-size:9px;
+  opacity:0.7;
+  margin-left:6px;
+  vertical-align:bottom;
+}
+
+.input-section{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.message-input{
+  flex:1;
+  height:38px;
+  padding:0 15px;
+  border:none;
+  outline:none;
+  border-radius:25px;
+  font-size:14px;
+}
+
+.send-button{
+  padding:10px 15px;
+  background:#205b2f;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.avatar{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:#885782;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:12px;
+  font-weight:bold;
+  flex-shrink:0;
+}
