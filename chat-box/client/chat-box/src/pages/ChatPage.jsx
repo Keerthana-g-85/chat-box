@@ -30,6 +30,8 @@ export default function ChatPage() {
   // Used for auto scrolling to latest message
   const messagesEndRef = useRef(null)
 
+  const [disabled, setDisabled] = useState(false);
+
   useEffect(() => {
     // Receive new message instantly
     socket.on('receive_message', (data) => {
@@ -44,6 +46,7 @@ export default function ChatPage() {
     // Alert if room already has 2 users
     socket.on('room_full', () => {
       alert('Room is full')
+      setDisabled(true)
     })
 
     // Show typing indicator only for other user
@@ -107,6 +110,14 @@ export default function ChatPage() {
     setMessage('')
   }
 
+  if (disabled) {
+    return (
+      <div className="chat-page">
+        <h2>Room is full. Access denied.</h2>
+      </div>
+    )
+  }
+
   return (
     <div className="chat-page">
       <div className="chat-container">
@@ -123,7 +134,7 @@ export default function ChatPage() {
         {/* Chat messages */}
         <div className="messages-container">
           {messages.map((msg, index) => (
-            <MessageBubble msg={msg} key={index} username={username} />
+            <MessageBubble msg={msg} key={index} username={username} value={disabled}/>
           ))}
           <div ref={messagesEndRef}></div>
         </div>
